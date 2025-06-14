@@ -8,7 +8,7 @@ Dieses Projekt demonstriert einen vollständigen ML-Workflow zur Vorhersage von 
 
 -  Klassifikation medizinischer Risikodaten
 -  Modell: Random Forest mit F1-Optimierung
--  Fokus auf Klassenausgleich & medizinische Fairness
+-  Klassenungleichgewicht & klinische Relevanz
 -  Evaluation: Konfusionsmatrix, Klassifikationsbericht, ROC-AUC
 
 ---
