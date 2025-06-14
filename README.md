@@ -1,76 +1,93 @@
-#  Stroke Prediction mit Machine Learning
+# Stroke Prediction mit Random Forest
 
-##  Projektüberblick
+Dieses Projekt demonstriert einen vollständigen ML-Workflow zur Vorhersage von Schlaganfallrisiken anhand von Patientendaten. Ziel ist es, ein zuverlässiges Klassifikationsmodell zu erstellen, das potenzielle Schlaganfälle frühzeitig identifiziert – als Entscheidungsunterstützung für Prävention und Diagnostik.
 
-Ziel dieses Projekts ist die Entwicklung eines Vorhersagemodells zur Einschätzung des Schlaganfallrisikos auf Basis medizinischer und demografischer Patientendaten. Der zugrunde liegende Datensatz umfasst über 5.000 Einträge mit Merkmalen wie Alter, Blutzucker, BMI, Beruf und Rauchverhalten.
+---
 
-Da Schlaganfälle nur bei etwa 5 % der Fälle auftreten, besteht ein starkes Klassenungleichgewicht. Deshalb liegt der Schwerpunkt auf dem F1-Score der positiven Klasse (stroke = 1), um Sensitivität und Präzision gleichermaßen zu bewerten.
+##  Projekthighlights
 
-Im Rahmen dieses Projekts wurden verschiedene Machine-Learning-Algorithmen untersucht – darunter SVM, Logistische Regression, KNN und Naive Bayes.
-Der Fokus dieses GitHub-Repositories liegt auf dem `Random Forest Classifier`, da dieser in meiner Analyse das beste Gleichgewicht zwischen Recall und Präzision erreicht hat.
+-  Klassifikation medizinischer Risikodaten
+-  Modell: Random Forest mit F1-Optimierung
+-  Fokus auf Klassenausgleich & medizinische Fairness
+-  Evaluation: Konfusionsmatrix, Klassifikationsbericht, ROC-AUC
 
-##  Datensatz
+---
 
-- **Beobachtungen:** 5.110 Patientendaten
-- **Features:** Alter, Geschlecht, Hypertonie, Herzkrankheiten, Familienstand, Beruf, Wohnort, Glukose, BMI, Raucherstatus
-- **Ziel:** Binäre Variable `stroke` (0 = kein Schlaganfall, 1 = Schlaganfall)
+##  Datengrundlage
 
+Der Datensatz stammt aus Kaggle und enthält anonymisierte Patienteninformationen:
 
-##  Modellübersicht & Performancevergleich
+- **Geschlecht**
+- **Alter**
+- **Hypertonie (Bluthochdruck)**
+- **Herzerkrankung**
+- **Raucherstatus**
+- **BMI**
+- **Glukoselevel**
+- **Beruf & Familienstand**
+- **Ziel:** `stroke` (0 = kein Schlaganfall, 1 = Schlaganfall)
 
-| Modell                  | Accuracy | F1-Score (Positiv) | Besonderheiten |
-|------------------------|----------|--------------------|----------------|
-| 🔵 Random Forest        | 88 %     | **0.29**           | Bestes Modell (mit Gewichtung), gute Balance |
-| 🟠 Support Vector Classifier (SVC) | 85 %     | 0.26               | Polynom-Kernel, Recall hoch |
-| 🟢 Decision Tree        | 86 %     | 0.19               | Inkl. SMOTE, aber viele False Positives |
-| 🔴 K-Nearest Neighbors  | 83 %     | 0.13               | Hoher Bias, Recall schlecht |
-| ⚪ Naive Bayes          | 82 %     | 0.14               | Extrem hoher Recall, kaum Präzision |
-| 🟡 Logistische Regression | 84 %   | 0.22 – 0.25        | Gute Basis, stabil auch mit wenigen Features |
+---
 
+##  Verwendete Tools
 
-##  Bewertungskriterien
+- **Python 3.8+**
+- **pandas**, **NumPy** – Datenaufbereitung
+- **scikit-learn** – Modellierung & Metriken
+  - `RandomForestClassifier`
+  - `train_test_split`, `GridSearchCV`
+  - `classification_report`, `confusion_matrix`, `roc_auc_score`
+- **matplotlib**, **seaborn** – Visualisierung
 
-- **F1-Score Klasse 1** als wichtigste Metrik  
-- Train/Test-Split: 80/20 (stratifiziert)  
-- Kreuzvalidierung: 5-fach  
-- Klassengewichtungen vs. SMOTE getestet
+---
 
+##  Methodik
+
+1. **Datenbereinigung**
+   - Entfernung leerer Einträge & Ausreißer
+   - Umwandlung kategorialer Variablen (z. B. `smoking_status` → One-Hot)
+
+2. **Explorative Analyse**
+   - Korrelationen & Risikomuster sichtbar gemacht
+   - Verteilung von Schlaganfällen nach Alter, Glukose, BMI
+
+3. **Modelltraining mit Random Forest**
+   - Optimierung via GridSearchCV (F1-Score als Ziel)
+   - Feature-Importances extrahiert
+
+4. **Evaluation**
+   - Konfusionsmatrix mit Recall & Precision pro Klasse
+   - ROC-AUC zur Schwellenanalyse
+   - Optional: SHAP zur Interpretierbarkeit
+
+---
+
+##  Besonderheiten & Herausforderungen
+
+- **Ungleichgewicht der Klassen** (wenige Schlaganfall-Fälle)
+  - Umgang durch: `class_weight='balanced'`, Stratified Sampling
+- **Klinische Validität vs. Modellkomplexität**
+  - Bewusst Entscheidung gegen Blackbox-Modelle (z. B. XGBoost, NN)
+  - Fokus auf nachvollziehbare Bäume
+
+---
 
 ##  Lessons Learned
 
-- Gewichtung der Klassen stabiler als SMOTE
-- GridSearch verbessert Recall signifikant
-- Dropping von Daten (z. B. Junge Patienten) kann Recall senken
-- F1-Score bietet bessere Aussagekraft als Accuracy bei Imbalance
+-  Feature-Auswahl entscheidend: Alter, Hypertonie und Glukoselevel sind starke Prädiktoren
+-  Klassische ML-Methoden wie Random Forest liefern robuste Basis ohne Overfitting
+-  Falsche Negative sind medizinisch kritisch: Recall ist wichtiger als Accuracy
 
+---
 
-##  Projektstruktur
+##  Nächste Schritte
 
-```
-.
-├── healthcare_dataset_random_forest_.ipynb
-├── healthcare-dataset-stroke-data.csv
-├── df_final.csv
-├── requirements.txt
-```
+- Einbindung echter Zeitverlaufsdaten (z. B. Verlauf von Blutwerten)
+- Vergleich mit XGBoost / LightGBM-Modellen
+- Deployment als Screening-Tool für Ärzte mit UI (Streamlit, Dash)
+- Erweiterung um Patientenhistorien (z. B. Anzahl Klinikaufenthalte)
 
+---
 
-##  Ausführung
-
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-Dann im Notebook starten:
-```bash
-jupyter notebook
-```
-→ Öffne `healthcare_dataset_random_forest_.ipynb`
-
-
-##  Hinweis
-
-Die Daten stammen aus einem öffentlich zugänglichen Kaggle-Datensatz. Das Modell dient **ausschließlich zu Lernzwecken**.
+*Projekt von [Dein Name], 2025*
 
