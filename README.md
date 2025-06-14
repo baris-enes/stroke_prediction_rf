@@ -1,6 +1,6 @@
 # Stroke Prediction mit Random Forest
 
-Dieses Projekt demonstriert einen vollständigen ML-Workflow zur Vorhersage von Schlaganfallrisiken anhand von Patientendaten. Ziel ist es, ein zuverlässiges Klassifikationsmodell zu erstellen, das potenzielle Schlaganfälle frühzeitig identifiziert – als Entscheidungsunterstützung für Prävention und Diagnostik.
+Dieses Projekt demonstriert einen vollständigen ML-Workflow zur Vorhersage von Schlaganfallrisiken anhand von Patientendaten. Ziel ist es, ein zuverlässiges Klassifikationsmodell zu erstellen, das potenzielle Schlaganfälle frühzeitig identifiziert – als Entscheidungsunterstützung zur präventiven Früherkennung und klinischen Entscheidungsunterstützung
 
 ---
 
