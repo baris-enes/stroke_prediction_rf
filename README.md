@@ -89,5 +89,5 @@ Der Datensatz stammt aus Kaggle und enthält anonymisierte Patienteninformatione
 
 ---
 
-*Projekt von [Dein Name], 2025*
+*Projekt von Enes Baris, 2025*
 
